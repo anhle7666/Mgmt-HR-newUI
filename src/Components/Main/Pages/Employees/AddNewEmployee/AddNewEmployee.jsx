@@ -68,9 +68,9 @@ const AddNewEmployee = () => {
                                         </label>
                                         <input
                                             type="text"
-                                            name="university"
-                                            id="university"
-                                            autoComplete="university"
+                                            name="gender"
+                                            id="gender"
+                                            autoComplete="gender"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>

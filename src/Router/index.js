@@ -17,57 +17,68 @@ const Router = () => {
         {
             key: "tc",
             path: "/",
+            title: "Trang chủ",
             element: <Homepage />,
         },
 
         {
             key: "dsns",
             path: "/danh-sach-nhan-su",
+            title: "Trang chủ",
             element: <EmployeesList />,
         },
         {
             key: "tns",
             path: "/them-nhan-su",
+            title: "Trang chủ",
             element: <NewEmployee />,
         },
         {
             key: "dt",
             path: "/dao-tao",
+            title: "Trang chủ",
             element: <Training />,
         },
         {
             key: "llv",
             path: "/lich-lam-viec",
+            title: "Trang chủ",
             element: <ScheduleBoard />,
         },
         {
             key: "cc",
             path: "/cham-cong",
+            title: "Trang chủ",
             element: <TimeKeeping />,
         },
         {
             key: "tll",
             path: "/tao-lich-lam",
+            title: "Trang chủ",
             element: <CreateSchedule />,
         },
         {
             key: "bh",
             path: "/bao-hiem",
+            title: "Trang chủ",
             element: <Insurance />,
         },
         {
             key: "luong",
             path: "/luong",
+            title: "Trang chủ",
             element: <Salary />,
         },
         {
             key: "np",
             path: "/nghi-phep",
+            title: "Trang chủ",
             element: <Leave />,
         },
         {
             key: "dn",
             path: "/dang-nhap",
+            title: "Trang chủ",
             element: <Login />,
         },
     ];
@@ -82,7 +93,7 @@ const Router = () => {
         >
             <Routes>
                 {routes.map((route) => (
-                    <Route key={route.key} path={route.path} element={route.element} />
+                    <Route key={route.key} path={route.path} navigator={route.title} element={route.element} />
                 ))}
             </Routes>
         </Suspense>

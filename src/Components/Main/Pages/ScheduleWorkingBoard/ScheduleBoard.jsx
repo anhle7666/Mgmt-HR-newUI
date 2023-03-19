@@ -1,5 +1,10 @@
+import Calendar from "../../Calendar/Calendar";
 const ScheduleBoard = () => {
-    return <h1>Lich lam viec</h1>;
+    return (
+        <>
+            <Calendar />
+        </>
+    );
 };
 
 export default ScheduleBoard;

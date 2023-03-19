@@ -21,7 +21,7 @@ const MyCalendar = (props) => (
             events={events}
             startAccessor="start"
             endAccessor="end"
-            className="bg-base-300 min-h-screen text-base-content"
+            className="bg-base-300 min-h-screen text-base-content px-2 py-5"
         />
     </div>
 );

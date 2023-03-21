@@ -1,18 +1,103 @@
-// import Input from "../../../../Input/Input";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const AddNewEmployee = () => {
-    const convertFormToJson = (form) => {
-        const data = new FormData(form);
-        const json = Object.fromEntries(data.entries());
-        return json;
-    };
+const EditEmployee = () => {
+    const { id } = useParams();
+    const [employee, setEmployee] = useState(null);
+
+    const employees = [
+        {
+            IDEmployee: "PT_20260",
+            accountNumber: "123456789",
+            bank: "Vietinbank",
+            city: "Cần Thơ",
+            country: "Việt Nam",
+            districts: "Ninh Kiều",
+            emailAddress: "anhle7666@gmail.com",
+            firstName: "Lê",
+            gender: "Nam",
+            graduationYear: "2023",
+            lastName: "Phúc Anh",
+            birthday: "2001-01-26",
+            literacy: "Cao đẳng",
+            position: "Dreamie",
+            streetAddress: "4 Nguyễn Văn Linh",
+            tax: "124568",
+            university: "Đại học Cần Thơ",
+            ward: "An Khánh",
+        },
+        {
+            IDEmployee: "PT_20261",
+            accountNumber: "123456789",
+            bank: "Vietinbank",
+            city: "Cần Thơ",
+            country: "Việt Nam",
+            districts: "Ninh Kiều",
+            emailAddress: "anhle7666@gmail.com",
+            firstName: "Lê",
+            gender: "Nam",
+            graduationYear: "2023",
+            lastName: "Phúc Anh",
+            birthday: "2001-01-26",
+            literacy: "Cao đẳng",
+            position: "Dreamie",
+            streetAddress: "4 Nguyễn Văn Linh",
+            tax: "124568",
+            university: "Đại học Cần Thơ",
+            ward: "An Khánh",
+        },
+        {
+            IDEmployee: "PT_20262",
+            accountNumber: "123456789",
+            bank: "Vietinbank",
+            city: "Cần Thơ",
+            country: "Việt Nam",
+            districts: "Ninh Kiều",
+            emailAddress: "anhle7666@gmail.com",
+            firstName: "Lê",
+            gender: "Nam",
+            graduationYear: "2023",
+            lastName: "Phúc Anh",
+            birthday: "2001-01-26",
+            literacy: "Cao đẳng",
+            position: "Dreamie",
+            streetAddress: "4 Nguyễn Văn Linh",
+            tax: "124568",
+            university: "Đại học Cần Thơ",
+            ward: "An Khánh",
+        },
+        {
+            IDEmployee: "PT_20263",
+            accountNumber: "123456789",
+            bank: "Vietinbank",
+            city: "Cần Thơ",
+            country: "Việt Nam",
+            districts: "Ninh Kiều",
+            emailAddress: "anhle7666@gmail.com",
+            firstName: "Lê",
+            gender: "Nam",
+            graduationYear: "2023",
+            lastName: "Phúc Anh",
+            birthday: "2001-01-26",
+            literacy: "Cao đẳng",
+            position: "Dreamie",
+            streetAddress: "4 Nguyễn Văn Linh",
+            tax: "124568",
+            university: "Đại học Cần Thơ",
+            ward: "An Khánh",
+        },
+    ];
+    useEffect(() => {
+        const employee = employees.find((e) => e.IDEmployee === id);
+        setEmployee(employee);
+    }, []);
 
     const handleSumbitForm = (e) => {
-        const form = document.querySelector("#employeeForm");
         e.preventDefault();
-        const json = convertFormToJson(form);
-        console.log(json);
     };
+
+    if (!employee) return <h1>Loading</h1>;
+
     return (
         <div className="min-h-screen bg-base-200">
             <div className="mt-10 sm:mt-0">
@@ -181,6 +266,8 @@ const AddNewEmployee = () => {
                                             type="text"
                                             name="IDEmployee"
                                             id="IDEmployee"
+                                            value={employee.IDEmployee}
+                                            readOnly
                                             autoComplete="address-level1"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -353,4 +440,4 @@ const AddNewEmployee = () => {
     );
 };
 
-export default AddNewEmployee;
+export default EditEmployee;

@@ -1,27 +1,145 @@
+// import React from "react";
+import { useState } from "react";
 const Training = () => {
+    const [selected, setSelected] = useState({
+        firstName: "",
+        lastName: "",
+    });
+
+    const loadingDataEmployee = () => {
+        const employeesList = [
+            {
+                IDEmployee: "PT_20261",
+                accountNumber: "123456789",
+                bank: "Vietinbank",
+                city: "Cần Thơ",
+                country: "Việt Nam",
+                districts: "Ninh Kiều",
+                emailAddress: "anhle7666@gmail.com",
+                firstName: "Lê",
+                gender: "Nam",
+                graduationYear: "2023",
+                lastName: "Phúc Anh",
+                birthday: "2001-01-26",
+                literacy: "Cao đẳng",
+                position: "Dreamie",
+                streetAddress: "4 Nguyễn Văn Linh",
+                tax: "124568",
+                university: "Đại học Cần Thơ",
+                ward: "An Khánh",
+            },
+            {
+                IDEmployee: "PT_20281",
+                accountNumber: "123456789",
+                bank: "Vietinbank",
+                city: "Cần Thơ",
+                country: "Việt Nam",
+                districts: "Ninh Kiều",
+                emailAddress: "anhle7666@gmail.com",
+                firstName: "Lê",
+                gender: "Nam",
+                graduationYear: "2023",
+                lastName: "Phúc Hậu",
+                literacy: "Cao đẳng",
+                position: "Dreamie",
+                streetAddress: "4 Nguyễn Văn Linh",
+                tax: "124568",
+                university: "Đại học Cần Thơ",
+                ward: "An Khánh",
+            },
+            {
+                IDEmployee: "PT_202121",
+                accountNumber: "123456789",
+                bank: "Vietinbank",
+                city: "Cần Thơ",
+                country: "Việt Nam",
+                districts: "Ninh Kiều",
+                emailAddress: "anhle7666@gmail.com",
+                firstName: "Lê",
+                gender: "Nam",
+                graduationYear: "2023",
+                lastName: "Phúc anh",
+                literacy: "Cao đẳng",
+                position: "Dreamie",
+                streetAddress: "4 Nguyễn Văn Linh",
+                tax: "124568",
+                university: "Đại học Cần Thơ",
+                ward: "An Khánh",
+            },
+            {
+                IDEmployee: "PT_20262",
+                accountNumber: "123456789",
+                bank: "Vietinbank",
+                city: "Cần Thơ",
+                country: "Việt Nam",
+                districts: "Ninh Kiều",
+                emailAddress: "anhle7666@gmail.com",
+                firstName: "Lê",
+                gender: "Nam",
+                graduationYear: "2023",
+                lastName: "Phúc anh",
+                literacy: "Cao đẳng",
+                position: "Dreamie",
+                streetAddress: "4 Nguyễn Văn Linh",
+                tax: "124568",
+                university: "Đại học Cần Thơ",
+                ward: "An Khánh",
+            },
+        ];
+        return employeesList;
+    };
+
+    const loadNameFromId = () => {
+        if (!selected);
+        const fullName = `${selected.firstName} ${selected.lastName}`;
+        return fullName;
+    };
+
+    const convertFormToJson = (form) => {
+        const data = new FormData(form);
+        const json = Object.fromEntries(data.entries());
+        return json;
+    };
+
+    const handleSumbitForm = (e) => {
+        const form = document.querySelector("#employeeForm");
+        e.preventDefault();
+        const json = convertFormToJson(form);
+        console.log(json);
+    };
     return (
         <div className="min-h-screen bg-base-300">
-            {" "}
             <div className="mt-10 sm:mt-0">
                 <div className="md:grid md:grid-cols-1 md:gap-6">
                     <div className="mt-5 md:col-span-1 md:mt-0 py-5 bg-base-300">
                         <div className="overflow-hidden shadow sm:rounded-md ">
-                            <div className="bg-base-300 px-4 py-5 sm:p-6">
+                            <form id="employeeForm" className="bg-base-300 px-4 py-5 sm:p-6">
                                 <div className="grid grid-cols-6 gap-6">
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-1">
                                         <label
-                                            htmlFor="first-name"
+                                            htmlFor="IDEmployee"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
                                             Mã nhân viên
                                         </label>
-                                        <input
+                                        <select
                                             type="text"
-                                            name="first-name"
-                                            id="first-name"
-                                            autoComplete="given-name"
+                                            name="IDEmployee"
+                                            id="IDEmployee"
+                                            autoComplete="IDEmployee"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
-                                        />
+                                        >
+                                            {loadingDataEmployee().map((employee) => (
+                                                <option
+                                                    key={employee.IDEmployee}
+                                                    onClick={() => {
+                                                        setSelected(employee);
+                                                    }}
+                                                >
+                                                    {employee.IDEmployee}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-1">
                                         <label
@@ -32,94 +150,97 @@ const Training = () => {
                                         </label>
                                         <input
                                             type="text"
-                                            name="first-name"
-                                            id="first-name"
-                                            autoComplete="given-name"
+                                            name="fullName"
+                                            id="fullName"
+                                            value={loadNameFromId()}
+                                            autoComplete="fullName"
+                                            readOnly
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-1">
                                         <label
-                                            htmlFor="first-name"
+                                            htmlFor="IDCourse"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
                                             Mã khóa đào tạo
                                         </label>
                                         <input
                                             type="text"
-                                            name="first-name"
-                                            id="first-name"
-                                            autoComplete="given-name"
+                                            name="IDCourse"
+                                            id="IDCourse"
+                                            autoComplete="IDCourse"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
                                         <label
-                                            htmlFor="last-name"
+                                            htmlFor="nameCourse"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
                                             Tên khóa đào tạo
                                         </label>
                                         <input
                                             type="text"
-                                            name="last-name"
-                                            id="last-name"
-                                            autoComplete="family-name"
+                                            name="nameCourse"
+                                            id="nameCourse"
+                                            autoComplete="nameCourse"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
                                         <label
-                                            htmlFor="last-name"
+                                            htmlFor="startCourse"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
                                             Ngày bắt đầu
                                         </label>
                                         <input
                                             type="date"
-                                            name="last-name"
-                                            id="last-name"
-                                            autoComplete="family-name"
+                                            name="startCourse"
+                                            id="startCourse"
+                                            autoComplete="startCourse"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
                                         <label
-                                            htmlFor="last-name"
+                                            htmlFor="durationCourse"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
                                             Thời gian đào tạo
                                         </label>
                                         <input
                                             type="text"
-                                            name="last-name"
-                                            id="last-name"
-                                            autoComplete="family-name"
+                                            name="durationCourse"
+                                            id="durationCourse"
+                                            autoComplete="durationCourse"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
                                         <label
-                                            htmlFor="last-name"
+                                            htmlFor="trainingContent"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
                                             Nội dung đào tạo
                                         </label>
                                         <input
                                             type="text"
-                                            name="last-name"
-                                            id="last-name"
-                                            autoComplete="family-name"
+                                            name="trainingContent"
+                                            id="trainingContent"
+                                            autoComplete="trainingContent"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
-                            </div>
+                            </form>
 
                             <div className="bg-base-300 px-4 py-3 text-right sm:px-6">
                                 <button
                                     type="submit"
                                     className="inline-flex justify-center rounded-md bg-base-content py-2 px-3 text-sm font-semibold text-base-300 shadow-sm hover:text-base-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                                    onClick={handleSumbitForm}
                                 >
                                     Lưu thông tin
                                 </button>

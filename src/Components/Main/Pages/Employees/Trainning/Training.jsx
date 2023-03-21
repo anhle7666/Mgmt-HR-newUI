@@ -1,93 +1,21 @@
-// import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import EmployeeServices from "../../../../../Services/Employee";
+
 const Training = () => {
     const [selected, setSelected] = useState({
         firstName: "",
         lastName: "",
     });
 
-    const loadingDataEmployee = () => {
-        const employeesList = [
-            {
-                IDEmployee: "PT_20261",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc Anh",
-                birthday: "2001-01-26",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-            {
-                IDEmployee: "PT_20281",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc Hậu",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-            {
-                IDEmployee: "PT_202121",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc anh",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-            {
-                IDEmployee: "PT_20262",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc anh",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-        ];
-        return employeesList;
-    };
+    const [employeesList, setEmployeesList] = useState([]);
+    useEffect(() => {
+        const loadData = async () => {
+            const employeesList = await EmployeeServices.getAllEmployees();
+            setEmployeesList(employeesList);
+        };
+
+        loadData();
+    }, []);
 
     const loadNameFromId = () => {
         if (!selected);
@@ -129,16 +57,18 @@ const Training = () => {
                                             autoComplete="IDEmployee"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         >
-                                            {loadingDataEmployee().map((employee) => (
-                                                <option
-                                                    key={employee.IDEmployee}
-                                                    onClick={() => {
-                                                        setSelected(employee);
-                                                    }}
-                                                >
-                                                    {employee.IDEmployee}
-                                                </option>
-                                            ))}
+                                            {employeesList
+                                                ? employeesList.map((employee) => (
+                                                      <option
+                                                          key={employee.IDEmployee}
+                                                          onClick={() => {
+                                                              setSelected(employee);
+                                                          }}
+                                                      >
+                                                          {employee.IDEmployee}
+                                                      </option>
+                                                  ))
+                                                : ""}
                                         </select>
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-1">

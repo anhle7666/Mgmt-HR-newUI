@@ -1,99 +1,31 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import EmployeeServices from "../../../../../Services/Employee";
 
 const EditEmployee = () => {
     const { id } = useParams();
     const [employee, setEmployee] = useState(null);
-
-    const employees = [
-        {
-            IDEmployee: "PT_20260",
-            accountNumber: "123456789",
-            bank: "Vietinbank",
-            city: "Cần Thơ",
-            country: "Việt Nam",
-            districts: "Ninh Kiều",
-            emailAddress: "anhle7666@gmail.com",
-            firstName: "Lê",
-            gender: "Nam",
-            graduationYear: "2023",
-            lastName: "Phúc Anh",
-            birthday: "2001-01-26",
-            literacy: "Cao đẳng",
-            position: "Dreamie",
-            streetAddress: "4 Nguyễn Văn Linh",
-            tax: "124568",
-            university: "Đại học Cần Thơ",
-            ward: "An Khánh",
-        },
-        {
-            IDEmployee: "PT_20261",
-            accountNumber: "123456789",
-            bank: "Vietinbank",
-            city: "Cần Thơ",
-            country: "Việt Nam",
-            districts: "Ninh Kiều",
-            emailAddress: "anhle7666@gmail.com",
-            firstName: "Lê",
-            gender: "Nam",
-            graduationYear: "2023",
-            lastName: "Phúc Anh",
-            birthday: "2001-01-26",
-            literacy: "Cao đẳng",
-            position: "Dreamie",
-            streetAddress: "4 Nguyễn Văn Linh",
-            tax: "124568",
-            university: "Đại học Cần Thơ",
-            ward: "An Khánh",
-        },
-        {
-            IDEmployee: "PT_20262",
-            accountNumber: "123456789",
-            bank: "Vietinbank",
-            city: "Cần Thơ",
-            country: "Việt Nam",
-            districts: "Ninh Kiều",
-            emailAddress: "anhle7666@gmail.com",
-            firstName: "Lê",
-            gender: "Nam",
-            graduationYear: "2023",
-            lastName: "Phúc Anh",
-            birthday: "2001-01-26",
-            literacy: "Cao đẳng",
-            position: "Dreamie",
-            streetAddress: "4 Nguyễn Văn Linh",
-            tax: "124568",
-            university: "Đại học Cần Thơ",
-            ward: "An Khánh",
-        },
-        {
-            IDEmployee: "PT_20263",
-            accountNumber: "123456789",
-            bank: "Vietinbank",
-            city: "Cần Thơ",
-            country: "Việt Nam",
-            districts: "Ninh Kiều",
-            emailAddress: "anhle7666@gmail.com",
-            firstName: "Lê",
-            gender: "Nam",
-            graduationYear: "2023",
-            lastName: "Phúc Anh",
-            birthday: "2001-01-26",
-            literacy: "Cao đẳng",
-            position: "Dreamie",
-            streetAddress: "4 Nguyễn Văn Linh",
-            tax: "124568",
-            university: "Đại học Cần Thơ",
-            ward: "An Khánh",
-        },
-    ];
     useEffect(() => {
-        const employee = employees.find((e) => e.IDEmployee === id);
-        setEmployee(employee);
-    }, []);
+        // const employee = employees.find((e) => e._id === id);
+        const loadData = async () => {
+            const employee = await EmployeeServices.getAnEmployee(id);
+            setEmployee(employee);
+        };
+        loadData();
+    }, [id]);
 
-    const handleSumbitForm = (e) => {
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setEmployee({
+            ...employee,
+            [name]: value,
+        });
+    };
+
+    const handleSumbitForm = async (e) => {
         e.preventDefault();
+        await EmployeeServices.updateEmployee(id, employee);
+        
     };
 
     if (!employee) return <h1>Loading</h1>;
@@ -117,6 +49,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="firstName"
                                             id="firstName"
+                                            value={employee.firstName}
+                                            onChange={handleChange}
                                             autoComplete="first-name"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -133,6 +67,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="lastName"
                                             id="lastName"
+                                            value={employee.lastName}
+                                            onChange={handleChange}
                                             autoComplete="family-name"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -152,6 +88,8 @@ const EditEmployee = () => {
                                             type="date"
                                             name="birthday"
                                             id="birthday"
+                                            value={employee.birthday}
+                                            onChange={handleChange}
                                             autoComplete="birthday"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -167,6 +105,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="gender"
                                             id="gender"
+                                            value={employee.gender}
+                                            onChange={handleChange}
                                             autoComplete="gender"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         >
@@ -176,16 +116,18 @@ const EditEmployee = () => {
                                     </div>
                                     <div className="col-span-6 sm:col-span-2 lg:col-span-1">
                                         <label
-                                            htmlFor="university"
+                                            htmlFor="cmnd"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
-                                            Trường
+                                            CMND /CCCD
                                         </label>
                                         <input
                                             type="text"
-                                            name="university"
-                                            id="university"
-                                            autoComplete="university"
+                                            name="cmnd"
+                                            id="cmnd"
+                                            autoComplete="cmnd"
+                                            value={employee.cmnd}
+                                            onChange={handleChange}
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -200,6 +142,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="literacy"
                                             id="literacy"
+                                            value={employee.literacy}
+                                            onChange={handleChange}
                                             autoComplete="literacy"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         >
@@ -219,6 +163,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="university"
                                             id="university"
+                                            value={employee.university}
+                                            onChange={handleChange}
                                             autoComplete="university"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -234,6 +180,8 @@ const EditEmployee = () => {
                                             type="number"
                                             name="graduationYear"
                                             id="graduationYear"
+                                            value={employee.graduationYear}
+                                            onChange={handleChange}
                                             autoComplete="graduationYear"
                                             min="1990"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
@@ -250,6 +198,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="tax"
                                             id="tax"
+                                            value={employee.tax}
+                                            onChange={handleChange}
                                             autoComplete="off"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -284,6 +234,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="position"
                                             id="position"
+                                            value={employee.position}
+                                            onChange={handleChange}
                                             autoComplete="position"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         >
@@ -302,6 +254,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="emailAddress"
                                             id="emailAddress"
+                                            value={employee.emailAddress}
+                                            onChange={handleChange}
                                             autoComplete="email"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -317,6 +271,8 @@ const EditEmployee = () => {
                                         <select
                                             id="country"
                                             name="country"
+                                            value={employee.country}
+                                            onChange={handleChange}
                                             autoComplete="country-name"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         >
@@ -337,6 +293,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="streetAddress"
                                             id="streetAddress"
+                                            value={employee.streetAddress}
+                                            onChange={handleChange}
                                             autoComplete="streetAddress"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -353,6 +311,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="city"
                                             id="city"
+                                            value={employee.city}
+                                            onChange={handleChange}
                                             autoComplete="address-level2"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -369,6 +329,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="districts"
                                             id="districts"
+                                            value={employee.districts}
+                                            onChange={handleChange}
                                             autoComplete="address-level1"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -385,6 +347,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="ward"
                                             id="ward"
+                                            value={employee.ward}
+                                            onChange={handleChange}
                                             autoComplete="address-level2"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -401,6 +365,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="bank"
                                             id="bank"
+                                            value={employee.bank}
+                                            onChange={handleChange}
                                             autoComplete="bank"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
@@ -416,6 +382,8 @@ const EditEmployee = () => {
                                             type="text"
                                             name="accountNumber"
                                             id="accountNumber"
+                                            value={employee.accountNumber}
+                                            onChange={handleChange}
                                             autoComplete="off"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />

@@ -1,5 +1,5 @@
 // import Input from "../../../../Input/Input";
-
+import EmployeeServices from "../../../../../Services/Employee";
 const AddNewEmployee = () => {
     const convertFormToJson = (form) => {
         const data = new FormData(form);
@@ -7,18 +7,23 @@ const AddNewEmployee = () => {
         return json;
     };
 
-    const handleSumbitForm = (e) => {
-        const form = document.querySelector("#employeeForm");
+    const handleSumbitForm = async (e) => {
         e.preventDefault();
-        const json = convertFormToJson(form);
-        console.log(json);
+        const form = e.target;
+        const employee = convertFormToJson(form);
+        await EmployeeServices.addNewEmployee(employee);
     };
     return (
         <div className="min-h-screen bg-base-200">
             <div className="mt-10 sm:mt-0">
                 <div className="md:grid md:grid-cols-1 md:gap-6">
                     <div className="mt-5 md:col-span-1 md:mt-0 py-5 bg-base-300">
-                        <form action="#" id="employeeForm" className="overflow-hidden shadow sm:rounded-md ">
+                        <form
+                            action="#"
+                            id="employeeForm"
+                            className="overflow-hidden shadow sm:rounded-md "
+                            onSubmit={handleSumbitForm}
+                        >
                             <div className="bg-base-300 px-4 py-5 sm:p-6">
                                 <div className="grid grid-cols-6 gap-6">
                                     <div className="col-span-6 sm:col-span-3">
@@ -91,16 +96,16 @@ const AddNewEmployee = () => {
                                     </div>
                                     <div className="col-span-6 sm:col-span-2 lg:col-span-1">
                                         <label
-                                            htmlFor="university"
+                                            htmlFor="cmnd"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
-                                            Trường
+                                            CMND /CCCD
                                         </label>
                                         <input
                                             type="text"
-                                            name="university"
-                                            id="university"
-                                            autoComplete="university"
+                                            name="cmnd"
+                                            id="cmnd"
+                                            autoComplete="cmnd"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -172,16 +177,16 @@ const AddNewEmployee = () => {
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                         <label
-                                            htmlFor="IDEmployee"
+                                            htmlFor="startDate"
                                             className="block text-sm font-medium leading-6 text-base-content"
                                         >
-                                            Mã nhân viên
+                                            Ngày bắt đầu làm việc
                                         </label>
                                         <input
-                                            type="text"
-                                            name="IDEmployee"
-                                            id="IDEmployee"
-                                            autoComplete="address-level1"
+                                            type="date"
+                                            name="startDate"
+                                            id="startDate"
+                                            autoComplete="startDate"
                                             className="bg-base-300 mt-2 block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-content placeholder:text-base-content focus:ring-2 focus:ring-inset focus:ring-base-content sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -340,7 +345,6 @@ const AddNewEmployee = () => {
                                 <button
                                     type="submit"
                                     className="inline-flex justify-center rounded-md bg-base-content py-2 px-3 text-sm font-semibold text-base-300 shadow-sm hover:text-base-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                                    onClick={handleSumbitForm}
                                 >
                                     Lưu thông tin
                                 </button>

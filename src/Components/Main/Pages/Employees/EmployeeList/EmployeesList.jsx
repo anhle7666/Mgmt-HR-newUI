@@ -1,98 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Search from "./Search/Search";
+import EmployeeServices from "../../../../../Services/Employee";
 const EmployeesList = () => {
     const navigator = useNavigate();
     const [employeesList, setEmployeesList] = useState(null);
-    
+
     const handleEdit = (employee) => {
-        navigator(`/chinh-sua-thong-tin/${employee.IDEmployee}`);
+        navigator(`/chinh-sua-thong-tin/${employee._id}`);
     };
 
     useEffect(() => {
-        const employees = [
-            {
-                IDEmployee: "PT_20260",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc Anh",
-                birthday: "2001-01-26",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-            {
-                IDEmployee: "PT_20261",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc Anh",
-                birthday: "2001-01-26",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-            {
-                IDEmployee: "PT_20262",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc Anh",
-                birthday: "2001-01-26",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-            {
-                IDEmployee: "PT_20263",
-                accountNumber: "123456789",
-                bank: "Vietinbank",
-                city: "Cần Thơ",
-                country: "Việt Nam",
-                districts: "Ninh Kiều",
-                emailAddress: "anhle7666@gmail.com",
-                firstName: "Lê",
-                gender: "Nam",
-                graduationYear: "2023",
-                lastName: "Phúc Anh",
-                birthday: "2001-01-26",
-                literacy: "Cao đẳng",
-                position: "Dreamie",
-                streetAddress: "4 Nguyễn Văn Linh",
-                tax: "124568",
-                university: "Đại học Cần Thơ",
-                ward: "An Khánh",
-            },
-        ];
-        const loadData = () => {
+        const loadData = async () => {
+            const employees = await EmployeeServices.getAllEmployees();
             setEmployeesList(employees);
         };
         loadData();

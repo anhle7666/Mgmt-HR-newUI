@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EmployeeServices from "../../../../../Services/Employee";
 
 const EditEmployee = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [employee, setEmployee] = useState(null);
     useEffect(() => {
         // const employee = employees.find((e) => e._id === id);
@@ -24,8 +25,11 @@ const EditEmployee = () => {
 
     const handleSumbitForm = async (e) => {
         e.preventDefault();
-        await EmployeeServices.updateEmployee(id, employee);
-        
+        const btn = document.querySelector("#btn-submit");
+        const spinner = <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>;
+        btn.append(spinner);
+        const res = await EmployeeServices.updateEmployee(id, employee);
+        if (res) navigate("/danh-sach-nhan-su");
     };
 
     if (!employee) return <h1>Loading</h1>;
@@ -394,6 +398,7 @@ const EditEmployee = () => {
                             <div className="bg-base-300 px-4 py-3 text-right sm:px-6">
                                 <button
                                     type="submit"
+                                    id="btn-submit"
                                     className="inline-flex justify-center rounded-md bg-base-content py-2 px-3 text-sm font-semibold text-base-300 shadow-sm hover:text-base-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                                     onClick={handleSumbitForm}
                                 >

@@ -1,6 +1,20 @@
 import { Link } from "react-router-dom";
+import EmployeeServices from "../../../../Services/Employee";
 
 const Login = () => {
+    const convertFormToJson = (form) => {
+        const data = new FormData(form);
+        const json = Object.fromEntries(data.entries());
+        return json;
+    };
+    const handleSumbitForm = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const account = convertFormToJson(form);
+        const token = await EmployeeServices.login(account);
+        console.log(token);
+    };
+
     return (
         <>
             <div className="hero min-h-screen bg-base-200">
@@ -13,18 +27,28 @@ const Login = () => {
                         </p>
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <div className="card-body">
+                        <form className="card-body" onSubmit={handleSumbitForm}>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="text" placeholder="email" className="input input-bordered" />
+                                <input
+                                    type="text"
+                                    name="username"
+                                    placeholder="email"
+                                    className="input input-bordered"
+                                />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="text" placeholder="password" className="input input-bordered" />
+                                <input
+                                    type="text"
+                                    placeholder="password"
+                                    name="password"
+                                    className="input input-bordered"
+                                />
                                 <label className="label">
                                     <Link to="/quen-mat-khau" className="label-text-alt link link-hover">
                                         Forgot password?
@@ -34,7 +58,7 @@ const Login = () => {
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Login</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

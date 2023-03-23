@@ -1,6 +1,8 @@
 // import Input from "../../../../Input/Input";
+import { useNavigate } from "react-router-dom";
 import EmployeeServices from "../../../../../Services/Employee";
 const AddNewEmployee = () => {
+    const navigate = useNavigate();
     const convertFormToJson = (form) => {
         const data = new FormData(form);
         const json = Object.fromEntries(data.entries());
@@ -12,6 +14,7 @@ const AddNewEmployee = () => {
         const form = e.target;
         const employee = convertFormToJson(form);
         await EmployeeServices.addNewEmployee(employee);
+        navigate("/them-nhan-su");
     };
     return (
         <div className="min-h-screen bg-base-200">

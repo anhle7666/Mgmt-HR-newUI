@@ -4,6 +4,16 @@ import backend from "../Configs/index.js";
 const API_URL = backend.API_url;
 
 class EmployeeServices {
+    static async login(account) {
+        try {
+            const response = await axios.post(`${API_URL}/login`, account);
+            localStorage.setItem("accessToken", response.data);
+            return response.data;
+        } catch (err) {
+            throw err;
+        }
+    }
+
     static async getAllEmployees() {
         try {
             const response = await axios.get(`${API_URL}/employees/list`);
@@ -35,6 +45,15 @@ class EmployeeServices {
             return response.data;
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    static async addTrainingEmloyee(id, course) {
+        try {
+            const response = await axios.post(`${API_URL}/employees/training/${id}`, course);
+            return response.data;
+        } catch (err) {
+            throw err;
         }
     }
 }

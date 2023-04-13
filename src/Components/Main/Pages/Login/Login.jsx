@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 import EmployeeServices from "../../../../Services/Employee";
 
 const Login = () => {
+    const navigate = useNavigate();
     const convertFormToJson = (form) => {
         const data = new FormData(form);
         const json = Object.fromEntries(data.entries());
@@ -11,8 +13,12 @@ const Login = () => {
         e.preventDefault();
         const form = e.target;
         const account = convertFormToJson(form);
-        const token = await EmployeeServices.login(account);
-        console.log(token);
+        if (!account.username && !account.password) {
+            alert("Vui lòng nhập tài khoản và mật khẩu");
+        }
+        const login = await EmployeeServices.login(account);
+        if (login) navigate("/");
+        window.location.reload();
     };
 
     return (
@@ -20,7 +26,7 @@ const Login = () => {
             <div className="hero min-h-screen bg-base-200">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Login now!</h1>
+                        <h1 className="text-5xl font-bold">Đăng nhập</h1>
                         <p className="py-6">
                             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
                             quasi. In deleniti eaque aut repudiandae et a id nisi.
@@ -30,28 +36,23 @@ const Login = () => {
                         <form className="card-body" onSubmit={handleSumbitForm}>
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Email</span>
+                                    <span className="label-text font-bold">Mã nhân viên</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    name="username"
-                                    placeholder="email"
-                                    className="input input-bordered"
-                                />
+                                <input type="text" name="username" placeholder="ID" className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Password</span>
+                                    <span className="label-text font-bold">Mật khẩu</span>
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="password"
+                                    placeholder="Mật khẩu"
                                     name="password"
                                     className="input input-bordered"
                                 />
                                 <label className="label">
-                                    <Link to="/quen-mat-khau" className="label-text-alt link link-hover">
-                                        Forgot password?
+                                    <Link to="/doi-mat-khau" className="label-text-alt link link-hover">
+                                        Đổi mật khẩu
                                     </Link>
                                 </label>
                             </div>

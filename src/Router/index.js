@@ -5,6 +5,7 @@ const EmployeesList = lazy(() => import("../Components/Main/Pages/Employees/Empl
 const NewEmployee = lazy(() => import("../Components/Main/Pages/Employees/AddNewEmployee/AddNewEmployee"));
 const EditEmployee = lazy(() => import("../Components/Main/Pages/Employees/EditEmployee/EditEmployee"));
 const Training = lazy(() => import("../Components/Main/Pages/Employees/Trainning/Training"));
+const AddFace = lazy(() => import("../Components/Main/Pages/Employees/AddFace"));
 const CreateSchedule = lazy(() => import("../Components/Main/Pages/ScheduleWorkingBoard/CreateSchedule"));
 const TimeKeeping = lazy(() => import("../Components/Main/Pages/ScheduleWorkingBoard/TimeKeeping"));
 const ScheduleBoard = lazy(() => import("../Components/Main/Pages/ScheduleWorkingBoard/ScheduleBoard"));
@@ -12,7 +13,6 @@ const Salary = lazy(() => import("../Components/Main/Pages/Salary/Salary"));
 const Insurance = lazy(() => import("../Components/Main/Pages/Insurance/Insurance"));
 const Leave = lazy(() => import("../Components/Main/Pages/Leave/Leave"));
 const Login = lazy(() => import("../Components/Main/Pages/Login/Login"));
-
 const Router = () => {
     const routes = [
         {
@@ -75,6 +75,11 @@ const Router = () => {
             key: "dn",
             path: "/dang-nhap",
             element: <Login />,
+        },
+        {
+            key: "tkm",
+            path: "/them-khuon-mat",
+            element: <AddFace />,
         },
     ];
 

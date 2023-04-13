@@ -56,6 +56,24 @@ class EmployeeServices {
             throw err;
         }
     }
+
+    static async getListShifts() {
+        try {
+            const response = await axios.get(`${API_URL}/shift`);
+            return response.data;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    static async addNewShift(shift) {
+        try {
+            const response = await axios.post(`${API_URL}/shift`, shift);
+            return response.data;
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 export default EmployeeServices;

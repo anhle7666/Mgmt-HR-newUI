@@ -22,7 +22,6 @@ const EmployeesList = () => {
             <Search />
             <div className="overflow-x-auto">
                 <table className="table w-full">
-                    {/* head */}
                     <thead>
                         <tr>
                             <th>Mã NV</th>
@@ -51,7 +50,7 @@ const EmployeesList = () => {
                             ))
                         ) : (
                             <tr>
-                                <td>Không có nhân viên</td>
+                                <td>Đang tải</td>
                             </tr>
                         )}
                     </tbody>

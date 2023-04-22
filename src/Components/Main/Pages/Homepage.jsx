@@ -3,14 +3,13 @@ import ScheduleServices from "../../../Services/Schedule";
 // import { useEffect } from "react";
 
 const Homepage = () => {
-    const faceio = new faceIO("fioaf245");
+    // const faceio = new faceIO("fioaf245");
     const authenticateUser = async () => {
         // let userData = await faceio.authenticate({});
+        const IDEmployee = "PT00001";
         // const IDEmployee = userData.payload.IDEmployee;
         const timekeep = {};
         const Time = new Date();
-        const IDEmployee = "PT00002";
-        //lấy thời gian hiện tại
         timekeep.IDEmployee = IDEmployee;
         timekeep.time = Time;
         try {
@@ -37,11 +36,8 @@ const Homepage = () => {
                             Hãy luôn niềm nở với khách hàng, những người mang đến công việc cho chúng ta
                         </p>
                         <button className="btn btn-primary" onClick={authenticateUser}>
-                            Chấm vào
+                            Chấm công
                         </button>
-                        {/* <button className="btn btn-primary mx-10" onClick={authenticateUser}>
-                            Chấm ra
-                        </button> */}
                     </div>
                 </div>
             </div>

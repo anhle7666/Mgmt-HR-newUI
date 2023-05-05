@@ -3,7 +3,11 @@ const Search = () => {
         <div className="bg-base-300 h-16 flex">
             <div className="form-control self-center flex-end">
                 <div className="input-group mx-10">
-                    <input type="text" placeholder="Search…" className="input input- w-96 placeholder:text-base-content " />
+                    <input
+                        type="text"
+                        placeholder="Search…"
+                        className="input input- w-96 placeholder:text-base-content "
+                    />
                     <button className="btn btn-square">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

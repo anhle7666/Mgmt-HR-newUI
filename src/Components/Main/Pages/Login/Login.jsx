@@ -45,7 +45,7 @@ const Login = () => {
                                     <span className="label-text font-bold">Mật khẩu</span>
                                 </label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     placeholder="Mật khẩu"
                                     name="password"
                                     className="input input-bordered"

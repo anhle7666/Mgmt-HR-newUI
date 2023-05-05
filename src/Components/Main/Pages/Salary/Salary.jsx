@@ -4,7 +4,6 @@ import ScheduleServices from "../../../../Services/Schedule";
 import { utils, writeFile } from "xlsx";
 
 const Salary = () => {
-    let totalHoursWorking = 0;
     const [filter, setFilter] = useState([]);
     const [employee, setEmployee] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
@@ -60,6 +59,7 @@ const Salary = () => {
         const formattedTime = `${date}/${month}/${year}`;
         return formattedTime;
     };
+    let totalHoursWorking = 0;
     const countSalary = (hours, basicSalary = 20000) => {
         totalHoursWorking += hours;
         const tax = hours > 210 ? 10.5 : 0;
@@ -82,7 +82,6 @@ const Salary = () => {
             PaymentDate: formatTime(new Date()),
         }));
 
-        console.log(data);
         const worksheet = utils.json_to_sheet(data);
         const workbook = utils.book_new();
         utils.book_append_sheet(workbook, worksheet, "Sheet1");

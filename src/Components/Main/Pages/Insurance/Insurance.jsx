@@ -1,5 +1,7 @@
+import UnknowPage from "../Unknow";
+
 const Insurance = () => {
-    return <h1>Bao hiem</h1>;
+    return <UnknowPage />;
 };
 
 export default Insurance;

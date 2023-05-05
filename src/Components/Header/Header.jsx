@@ -36,7 +36,7 @@ const Header = () => {
                         >
                             <li>
                                 <Link to="/them-khuon-mat" className="justify-between">
-                                    Thêm tài khoản
+                                    Thêm khuôn mặt
                                 </Link>
                             </li>
                             <li>

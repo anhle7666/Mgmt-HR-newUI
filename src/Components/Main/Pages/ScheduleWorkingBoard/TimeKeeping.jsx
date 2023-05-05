@@ -25,18 +25,6 @@ const TimeKeeping = () => {
         return acc;
     }, []);
 
-    // const groupedResult = result.reduce((acc, curr) => {
-    //     const existing = acc.find((item) => item.IDEmployee === curr.IDEmployee && item.date === curr.date);
-
-    //     if (existing) {
-    //         existing.startTime = existing.startTime < curr.startTime ? existing.startTime : curr.startTime;
-    //         existing.endTime = existing.endTime > curr.endTime ? existing.endTime : curr.endTime;
-    //     } else {
-    //         acc.push(curr);
-    //     }
-    //     return acc;
-    // }, []);
-
     function selectTime(month) {
         let fromDate, toDate;
         if (month) {
@@ -90,13 +78,14 @@ const TimeKeeping = () => {
 
     function findName(idEmployee) {
         const employee = List.find((item) => item.IDEmployee === idEmployee);
-        return `${employee.firstName} ${employee.lastName}`;
+        return employee ? `${employee.firstName} ${employee.lastName}` : "-";
     }
 
     function getHourWorking(timegroup) {
         const hours = new Date(timegroup.endTime) - new Date(timegroup.startTime);
         return (hours / 3600000.0).toFixed(1);
     }
+
 
     useEffect(() => {
         async function loadData() {

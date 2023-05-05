@@ -79,12 +79,12 @@ export default function adminMenu(props) {
                             <li>
                                 <Link to="/luong">Lương</Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link to="/bao-hiem">Bảo hiểm</Link>
                             </li>
                             <li>
                                 <Link to="/nghi-phep">Nghỉ phép</Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </div>
@@ -143,12 +143,12 @@ export default function adminMenu(props) {
                         <li>
                             <Link to="/luong">Lương</Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to="/bao-hiem">Bảo hiểm</Link>
                         </li>
                         <li>
                             <Link to="/nghi-phep">Nghỉ phép</Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </>

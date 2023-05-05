@@ -3,11 +3,11 @@ import ScheduleServices from "../../../Services/Schedule";
 // import { useEffect } from "react";
 
 const Homepage = () => {
-    // const faceio = new faceIO("fioaf245");
+    const faceio = new faceIO("fioaf245");
     const authenticateUser = async () => {
-        // let userData = await faceio.authenticate({});
-        const IDEmployee = "PT00001";
-        // const IDEmployee = userData.payload.IDEmployee;
+        // const IDEmployee = "PT00001";
+        let userData = await faceio.authenticate({});
+        const IDEmployee = userData.payload.IDEmployee;
         const timekeep = {};
         const Time = new Date();
         timekeep.IDEmployee = IDEmployee;

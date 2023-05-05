@@ -7,6 +7,8 @@ import ScheduleServices from "../../../Services/Schedule";
 
 const localizer = momentLocalizer(moment);
 const MyCalendar = () => {
+    const colors = ["#F44336", "#FFC107", "#3F51B5", "#2196F3", "#673AB7", "#009688", "#4CAF50", "#FF5722", "#795548"];
+
     const [events, setEvents] = useState([]);
     const [start, setStart] = useState(new Date());
     const [Open, setOpen] = useState(false);
@@ -67,13 +69,17 @@ const MyCalendar = () => {
                 IDEmployee: selectedEmployee,
                 event: newEvent,
             });
-            // setEvents([...events, newEvent]);
         }
         setOpen(false);
     };
 
     const handleResetForm = () => {
         setOpen(false);
+    };
+    const eventPropGetter = (event) => {
+        const index = event.start.getHours() % colors.length;
+        const color = colors[index];
+        return { style: { backgroundColor: color } };
     };
 
     useEffect(() => {
@@ -156,7 +162,7 @@ const MyCalendar = () => {
                                     {listEmployees.map((employee) => (
                                         <option
                                             key={employee.IDEmployee}
-                                            value={employee.IDEmployee}
+                                            value={`${employee.firstName} ${employee.lastName}`}
                                         >{`${employee.IDEmployee}_${employee.firstName} ${employee.lastName}`}</option>
                                     ))}
                                 </select>
@@ -178,6 +184,7 @@ const MyCalendar = () => {
                 endAccessor="end"
                 className="bg-base-300 min-h-screen text-base-content px-2 py-5 relative"
                 selectable={true}
+                eventPropGetter={eventPropGetter}
                 onSelectSlot={(slotInfo) => handleSelectSlot(slotInfo)}
                 onSelectEvent={(e) => console.log(e)}
             />

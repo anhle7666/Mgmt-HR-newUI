@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+const Loadding = lazy(() => import("../Components/Main/Pages/Loadding"));
 const Homepage = lazy(() => import("../Components/Main/Pages/Homepage"));
 const EmployeesList = lazy(() => import("../Components/Main/Pages/Employees/EmployeeList/EmployeesList"));
 const NewEmployee = lazy(() => import("../Components/Main/Pages/Employees/AddNewEmployee/AddNewEmployee"));
@@ -84,13 +85,7 @@ const Router = () => {
     ];
 
     return (
-        <Suspense
-            fallback={
-                <div className="container-loader">
-                    <span className="loader"></span>
-                </div>
-            }
-        >
+        <Suspense fallback={<Loadding />}>
             <Routes>
                 {routes.map((route) => (
                     <Route key={route.key} path={route.path} element={route.element} />

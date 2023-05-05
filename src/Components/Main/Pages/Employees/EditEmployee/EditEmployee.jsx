@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeServices from "../../../../../Services/Employee";
+import exportToPDF from "./Exportpdf";
 
 const EditEmployee = () => {
     const { id } = useParams();
@@ -23,6 +24,10 @@ const EditEmployee = () => {
         });
     };
 
+    const handleExportForm = () => {
+        console.log(employee);
+        exportToPDF(employee);
+    };
     const handleSumbitForm = async (e) => {
         e.preventDefault();
         const btn = document.querySelector("#btn-submit");
@@ -396,6 +401,13 @@ const EditEmployee = () => {
                             </div>
 
                             <div className="bg-base-300 px-4 py-3 text-right sm:px-6">
+                                <button
+                                    type="submit"
+                                    className="inline-flex justify-center rounded-md bg-base-content py-2 px-3 text-sm font-semibold text-base-300 shadow-sm hover:text-base-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                                    onClick={handleExportForm}
+                                >
+                                    Xuất PDF
+                                </button>{" "}
                                 <button
                                     type="submit"
                                     id="btn-submit"

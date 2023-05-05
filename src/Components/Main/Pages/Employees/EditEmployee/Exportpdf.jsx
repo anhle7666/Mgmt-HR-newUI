@@ -43,7 +43,7 @@ const exportToPDF = (data) => {
         startY: 70,
         head: headers,
         body: dataValues,
-        fontStyle: { font: "Roboto", style: "normal" },
+        styles: { font: "Roboto", style: "normal" },
     };
 
     doc.autoTable(content);

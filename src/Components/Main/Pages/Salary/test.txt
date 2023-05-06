@@ -1,0 +1,56 @@
+
+    // const paymentSalary = () => {
+    //     const data = employee.map((item) => ({
+    //         ID: item.IDEmployee,
+    //         FullName: `${item.firstName} ${item.lastName}`,
+    //         TaxCode: item.tax,
+    //         Tax: item.salary ? "10.5%" : "0%",
+    //         Bank: item.bank,
+    //         BankAccount: item.accountNumber,
+    //         Payment: item.salary
+    //             ? countSalary(getTotalTime(item.IDEmployee), item.salary, 10.5)
+    //             : countSalary(getTotalTime(item.IDEmployee)),
+    //         PaymentDate: formatTime(new Date()),
+    //     }));
+
+    //     const worksheet = utils.json_to_sheet(data);
+    //     const workbook = utils.book_new();
+    //     utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //     const file = `Payment - ${new Date().toISOString()}.xlsx`;
+    //     writeFile(workbook, file);
+    // };
+
+    // const exportExcel = () => {
+    //     const data = employee.map((item) => ({
+    //         ID: item.IDEmployee,
+    //         FullName: `${item.firstName} ${item.lastName}`,
+    //         Position: item.position,
+    //         Salary: item.salary || formatMoney(20000),
+    //         TotalHours: getTotalTime(item.IDEmployee),
+    //         TotalSalary: item.salary
+    //             ? countSalary(getTotalTime(item.IDEmployee), item.salary)
+    //             : countSalary(getTotalTime(item.IDEmployee)),
+    //         Tax: item.salary ? "10.5%" : "0%",
+    //         Payment: item.salary
+    //             ? countSalary(getTotalTime(item.IDEmployee), item.salary, 10.5)
+    //             : countSalary(getTotalTime(item.IDEmployee)),
+    //         Status: "Đã thanh toán",
+    //         PaymentDate: "10/03/2023",
+    //     }));
+
+    //     const worksheet = utils.json_to_sheet(data);
+    //     const workbook = utils.book_new();
+    //     utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //     const file = `Salary - ${new Date().toISOString()}.xlsx`;
+    //     writeFile(workbook, file);
+    // };
+
+
+    const formatTime = (time) => {
+        const newTime = new Date(time);
+        const date = newTime.getDate().toString().padStart(2, "0");
+        const month = (newTime.getMonth() + 1).toString().padStart(2, "0");
+        const year = newTime.getFullYear().toString();
+        const formattedTime = `${date}/${month}/${year}`;
+        return formattedTime;
+    };

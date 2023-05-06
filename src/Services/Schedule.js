@@ -12,6 +12,15 @@ class ScheduleServices {
             throw err;
         }
     }
+
+    static async getAllSchedule() {
+        try {
+            const events = await axios.get(`${API_URL}/all-schedule`);
+            return events.data;
+        } catch (err) {
+            throw err;
+        }
+    }
     static async addSchedule(data) {
         try {
             const result = await axios.post(`${API_URL}/schedule`, data);

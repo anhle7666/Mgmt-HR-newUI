@@ -12,7 +12,7 @@ const TimeKeeping = lazy(() => import("../Components/Main/Pages/ScheduleWorkingB
 const ScheduleBoard = lazy(() => import("../Components/Main/Pages/ScheduleWorkingBoard/ScheduleBoard"));
 const Salary = lazy(() => import("../Components/Main/Pages/Salary/Salary"));
 const Insurance = lazy(() => import("../Components/Main/Pages/Insurance/Insurance"));
-const Leave = lazy(() => import("../Components/Main/Pages/Leave/Leave"));
+const Setting = lazy(() => import("../Components/Main/Pages/Setting/Setting"));
 const Login = lazy(() => import("../Components/Main/Pages/Login/Login"));
 const Router = () => {
     const routes = [
@@ -67,11 +67,7 @@ const Router = () => {
             path: "/luong",
             element: <Salary />,
         },
-        {
-            key: "np",
-            path: "/nghi-phep",
-            element: <Leave />,
-        },
+
         {
             key: "dn",
             path: "/dang-nhap",
@@ -81,6 +77,11 @@ const Router = () => {
             key: "tkm",
             path: "/them-khuon-mat",
             element: <AddFace />,
+        },
+        {
+            key: "cd",
+            path: "/cai-dat",
+            element: <Setting />,
         },
     ];
 

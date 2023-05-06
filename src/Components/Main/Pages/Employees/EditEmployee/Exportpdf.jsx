@@ -2,11 +2,10 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import RobotoFont from "../../../../../assets/fonts/Roboto-Regular.ttf";
 
-// import Opensans from "../../../../../assets/fonts/OpenSans-VariableFont_wdth,wght.ttf";
 const exportToPDF = (data) => {
+    const orientation = "portrait";
     const unit = "pt";
     const size = "A4";
-    const orientation = "portrait";
 
     const marginLeft = 40;
     const doc = new jsPDF(orientation, unit, size);

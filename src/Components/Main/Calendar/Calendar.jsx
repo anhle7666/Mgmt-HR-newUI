@@ -51,13 +51,25 @@ const MyCalendar = () => {
         return newDate;
     };
 
+    const getTimeStart = (IDShifts) => {
+        const shift = listShifts.find((s) => s.IDShifts === IDShifts);
+        console.log(shift.startTime);
+        return shift.startTime;
+    };
+
+    const getFullName = (ID) => {
+        const employee = listEmployees.find((e) => e.IDEmployee === ID);
+        const fullName = `${employee.firstName} ${employee.lastName}`;
+        return fullName;
+    };
+
     const handleSubmitForm = async (e) => {
         e.preventDefault();
         if (selectedEmployee && selectedShift) {
-            const startDateTime = setTime(start, selectedShift);
-            const endDateTime = setEndTime(start, selectedShift, 6);
+            const startDateTime = setTime(start, getTimeStart(selectedShift));
+            const endDateTime = setEndTime(start, getTimeStart(selectedShift), 6);
             const newEvent = {
-                title: `${selectedEmployee} - ${selectedShift}`,
+                title: `${getFullName(selectedEmployee)} - ${selectedShift}`,
                 start: startDateTime,
                 end: endDateTime,
             };
@@ -137,7 +149,7 @@ const MyCalendar = () => {
                                 >
                                     <option value="">-</option>
                                     {listShifts.map((shift) => (
-                                        <option key={shift.IDShifts} value={shift.startTime}>
+                                        <option key={shift.IDShifts} value={shift.IDShifts}>
                                             {shift.IDShifts}
                                         </option>
                                     ))}
@@ -162,7 +174,7 @@ const MyCalendar = () => {
                                     {listEmployees.map((employee) => (
                                         <option
                                             key={employee.IDEmployee}
-                                            value={`${employee.firstName} ${employee.lastName}`}
+                                            value={`${employee.IDEmployee}`}
                                         >{`${employee.IDEmployee}_${employee.firstName} ${employee.lastName}`}</option>
                                     ))}
                                 </select>
@@ -186,7 +198,7 @@ const MyCalendar = () => {
                 selectable={true}
                 eventPropGetter={eventPropGetter}
                 onSelectSlot={(slotInfo) => handleSelectSlot(slotInfo)}
-                onSelectEvent={(e) => console.log(e)}
+                onSelectEvent={(e) => alert(e.title)}
             />
         </div>
     );

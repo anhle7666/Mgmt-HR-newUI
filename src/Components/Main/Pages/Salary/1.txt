@@ -1,0 +1,176 @@
+
+import { utils, writeFile } from "xlsx";
+
+const Salary = () => {
+    const [filter, setFilter] = useState([]);
+    const [employee, setEmployee] = useState([]);
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+
+    const selectTime = (array) => {
+        const month = parseInt(document.getElementById("now").value);
+        const now = new Date();
+        now.setMonth(month - 1);
+        const fromDate = new Date(now.getFullYear(), now.getMonth(), 1);
+        const toDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+        const filteredTimekeeping = array.filter((date) => {
+            const time = new Date(date.date);
+            return time >= fromDate && time <= toDate;
+        });
+        if (filter) setFilter(filteredTimekeeping);
+        console.log(filter);
+        return filteredTimekeeping;
+    };
+    const selectCurrentMonth = () => {
+        const currMonth = new Date().getMonth();
+        selectMonth(currMonth + 1);
+    };
+
+    function selectMonth(month) {
+        setSelectedMonth(month);
+        console.log(month);
+        selectTime();
+    }
+
+    const getHourWorking = (timegroup) => {
+        const hours = new Date(timegroup.endTime) - new Date(timegroup.startTime);
+        return (hours / 3600000.0).toFixed(1);
+    };
+
+    const getTotalTime = (IDEmployee) => {
+        const employee = filter.filter((item) => item.IDEmployee === IDEmployee);
+        let TotalHours = 0;
+        if (employee) {
+            employee.forEach((item) => {
+                TotalHours += parseFloat(getHourWorking(item));
+            });
+        }
+        return TotalHours;
+    };
+
+    const formatMoney = (number) => {
+        return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
+    };
+
+    let totalHoursWorking = 0;
+    const countSalary = (hours, basicSalary = 20000) => {
+        totalHoursWorking += hours;
+        const tax = hours > 210 ? 10.5 : 0;
+        const salary = hours * basicSalary;
+        const finalSalary = salary - (salary * tax) / 100;
+        return formatMoney(finalSalary);
+    };
+
+    useEffect(() => {
+        const loadData = async () => {
+            const listEmployees = await EmployeeServices.getAllEmployees();
+            const listShifts = await ScheduleServices.getAllTimeKeep();
+            const result = listShifts.reduce((acc, curr) => {
+                const existing = acc.find(
+                    (item) =>
+                        item.IDEmployee === curr.IDEmployee &&
+                        item.date === new Date(curr.time).toISOString().slice(0, 10),
+                );
+
+                if (existing) {
+                    existing.endTime = curr.time;
+                } else {
+                    acc.push({
+                        IDEmployee: curr.IDEmployee,
+                        date: new Date(curr.time).toISOString().slice(0, 10),
+                        startTime: curr.time,
+                        endTime: curr.time,
+                    });
+                }
+                return acc;
+            }, []);
+            selectTime(result, selectedMonth);
+            setEmployee(listEmployees);
+        };
+        loadData();
+    }, [selectedMonth]);
+
+    return (
+        <>
+            <div className="bg-base-300 h-16 flex py-10 pb-14 w-screen">
+                <div className="form-control self-center flex-start mx-6 w-2/3">
+                    <br />
+                    <div className="input-group">
+                        <select
+                            type="date"
+                            id="now"
+                            onChange={(e) => selectMonth(e.target.value)}
+                            value={selectedMonth}
+                            className="input w-96 placeholder:text-base-content "
+                        >
+                            {Array.from({ length: 12 }, (_, i) => {
+                                const month = i + 1;
+                                return (
+                                    <option key={month} value={month}>
+                                        Tháng {month}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                        <button className="btn" onClick={selectCurrentMonth}>
+                            Tháng hiện tại
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="overflow-x-auto px-5 py-5">
+                <table className="table table-compact w-full">
+                    <thead>
+                        <tr>
+                            <th>Mã NV</th>
+                            <th>Họ và Tên</th>
+                            <th>Vị trí</th>
+                            <th>Lương CB (1)</th>
+                            <th>Tổng giờ làm (2)</th>
+                            <th>Tổng Lương (3)</th>
+                            <th>Thuế (4)</th>
+                            <th>Bảo hiểm (5)</th>
+                            <th>Lương thanh toán (6)</th>
+                            <th>Tình trạng thanh toán</th>
+                            <th>Ngày thanh toán</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filter ? (
+                            employee.map((item, i) => (
+                                <tr key={item.IDEmployee}>
+                                    <th>{item.IDEmployee}</th>
+                                    <td>{`${item.firstName} ${item.lastName}`}</td>
+                                    <td>{item.position}</td>
+                                    <td>{item.salary ? formatMoney(item.salary) : "20.000 đ"}</td>
+                                    <td>{getTotalTime(item.IDEmployee)}</td>
+                                    <td>
+                                        {item.salary
+                                            ? countSalary(getTotalTime(item.IDEmployee), item.salary)
+                                            : countSalary(getTotalTime(item.IDEmployee))}
+                                    </td>
+                                    <td>0%</td>
+                                    <td>0</td>
+                                    <td>
+                                        {item.salary
+                                            ? countSalary(getTotalTime(item.IDEmployee), item.salary)
+                                            : countSalary(getTotalTime(item.IDEmployee))}
+                                    </td>
+                                    <td>Đã thanh toán</td>
+                                    <td>10/03/2023</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td></td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </>
+    );
+};
+
+export default Salary;

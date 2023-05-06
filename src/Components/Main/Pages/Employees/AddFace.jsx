@@ -3,14 +3,9 @@ import { useState, useEffect } from "react";
 import EmployeeServices from "../../../../Services/Employee";
 const AddFace = () => {
     const [employeesList, setEmployeesList] = useState([]);
+
     const [selectedEmployee, setSelectedEmployee] = useState("");
 
-    const handleChooseEmployee = (e) => {
-        const { value } = e.target;
-        console.log(value);
-        setSelectedEmployee(value);
-    };
-    
     useEffect(() => {
         const loadData = async () => {
             const list = await EmployeeServices.getAllEmployees();
@@ -30,19 +25,30 @@ const AddFace = () => {
         window.location.reload();
     };
 
+    const addingFace = () => {
+        if (selectedEmployee) enrollNewUser();
+        else {
+            alert("Vui lòng chọn một nhân viên!");
+        }
+    };
+
     return (
         <>
             <div className="form-control">
                 <label className="input-group">
                     <span className="w-40">Nhân viên</span>
-                    <select type="text" className="input input-bordered w-full ">
+                    <select
+                        type="text"
+                        className="input input-bordered w-full "
+                        onChange={(e) => setSelectedEmployee(e.target.value)}
+                    >
                         <option>-</option>
                         {employeesList ? (
                             employeesList.map((employee) => (
                                 <option
                                     key={employee.IDEmployee}
                                     value={employee.IDEmployee}
-                                    onClick={handleChooseEmployee}
+                                    // onClick={() => setSelectedEmployee(employee.IDEmployee)}
                                 >{`${employee.firstName} ${employee.lastName}`}</option>
                             ))
                         ) : (
@@ -50,7 +56,7 @@ const AddFace = () => {
                         )}
                     </select>
                 </label>
-                <button className="btn mt-5" onClick={() => enrollNewUser()}>
+                <button className="btn mt-5" onClick={() => addingFace()}>
                     Thêm
                 </button>
             </div>

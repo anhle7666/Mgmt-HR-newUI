@@ -1,19 +1,89 @@
 import faceIO from "@faceio/fiojs";
+import { useEffect, useState } from "react";
 import ScheduleServices from "../../../Services/Schedule";
-// import { useEffect } from "react";
 
 const Homepage = () => {
     const faceio = new faceIO("fioaf245");
+    const [noti, setNoti] = useState("");
+    const [schedule, setSchedule] = useState([]);
+
+    useEffect(() => {
+        const loadSchedule = async () => {
+            try {
+                const schedule = await ScheduleServices.getAllSchedule();
+                setSchedule(schedule);
+            } catch (err) {
+                throw err;
+            }
+        };
+        loadSchedule();
+    }, []);
+    const checkTime = (time, event) => {
+        const thirtyMinutesInMilliseconds = 1800000;
+        const fiveMinutesInMilliseconds = 300000;
+        const tenMinutesInMilliseconds = 600000;
+        time = new Date(time);
+        const hasTime = event.find((e) => {
+            const start = new Date(e.start);
+            const end = new Date(e.end);
+            const timeBeforeStart = start - time;
+            if (timeBeforeStart < -thirtyMinutesInMilliseconds || timeBeforeStart > fiveMinutesInMilliseconds) {
+                return false;
+            }
+
+            const timeBeforeEnd = end - time;
+            if (timeBeforeEnd < -tenMinutesInMilliseconds) {
+                return false;
+            }
+
+            return true;
+        });
+
+        if (!hasTime) {
+            return null;
+        }
+
+        return hasTime;
+    };
+
+    const formatTime = (timeString) => {
+        const options = {
+            hour12: false,
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        };
+        const date = new Date(timeString);
+        return date.toLocaleDateString("en-US", options);
+    };
+
+    const findScheduleOfID = (IDEmployee) => {
+        const event = schedule.find((s) => s.IDEmployee === IDEmployee);
+        return event ? event.events : [];
+    };
+
     const authenticateUser = async () => {
-        // const IDEmployee = "PT00001";
+        // const IDEmployee = "PT00013";
         let userData = await faceio.authenticate({});
         const IDEmployee = userData.payload.IDEmployee;
         const timekeep = {};
         const Time = new Date();
         timekeep.IDEmployee = IDEmployee;
-        timekeep.time = Time;
+        timekeep.time = Time.toISOString();
         try {
-            await ScheduleServices.checkIn(timekeep);
+            const event = findScheduleOfID(IDEmployee);
+            if (checkTime(timekeep.time, event)) {
+                const name = event[0].title.split("-")[0];
+                const result = await ScheduleServices.checkIn(timekeep);
+                if (result.status === 200) {
+                    setNoti(`Xin chào ${name}, giờ chấm công là: ${formatTime(timekeep.time)}.`);
+                }
+            } else {
+                setNoti(`Ngoài khung giờ chấm công rồi nhé!`);
+            }
         } catch (err) {
             throw err;
         }
@@ -29,13 +99,17 @@ const Homepage = () => {
                     />
 
                     <div>
-                        <h1 className="text-5xl font-bold">Đã đến văn phòng!</h1>
-                        <p className="py-6">
-                            Đây là một môi trường dịch vụ.
-                            <br />
-                            Hãy luôn niềm nở với khách hàng, những người mang đến công việc cho chúng ta
-                        </p>
-                        <button className="btn btn-primary" onClick={authenticateUser}>
+                        <h1 className="text-5xl font-bold">Lotte Cinema Ninh Kiều</h1>
+                        {noti ? (
+                            <h1 className="py-6">{noti}</h1>
+                        ) : (
+                            <p className="py-6">
+                                Đây là một môi trường dịch vụ.
+                                <br />
+                                Hãy luôn niềm nở với khách hàng, những người mang đến công việc cho chúng ta
+                            </p>
+                        )}
+                        <button className="btn btn-primary" onClick={() => authenticateUser()}>
                             Chấm công
                         </button>
                     </div>

@@ -39,6 +39,7 @@ const exportToPDF = (data) => {
     ];
 
     const content = {
+        theme: "grid",
         startY: 70,
         head: headers,
         body: dataValues,

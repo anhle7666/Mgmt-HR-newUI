@@ -86,7 +86,6 @@ const TimeKeeping = () => {
         return (hours / 3600000.0).toFixed(1);
     }
 
-
     useEffect(() => {
         async function loadData() {
             const Employees = await EmployeeServices.getAllEmployees();
@@ -100,6 +99,17 @@ const TimeKeeping = () => {
     return (
         <>
             <div className="bg-base-300 h-16 flex py-10 pb-14">
+                <div className="form-control self-center flex-end mx-10 ">
+                    <div>ID Nhân viên</div>
+                    <div className="input-group">
+                        <select type="date" id="fromDate" className="input  w-96 placeholder:text-base-content ">
+                            <option value="">-</option>
+                            {List.map((e) => (
+                                <option key={e.IDEmployee}>{e.IDEmployee}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
                 <div className="form-control self-center flex-end mx-10 ">
                     <div>Từ</div>
                     <div className="input-group">
@@ -126,6 +136,7 @@ const TimeKeeping = () => {
                         />
                     </div>
                 </div>
+
                 <div className="form-control self-center flex-end mx-14">
                     <br />
                     <button
@@ -137,6 +148,7 @@ const TimeKeeping = () => {
                         Tháng
                     </button>
                 </div>
+
                 <div className="form-control self-center flex-end mx-14">
                     <br />
                     <button

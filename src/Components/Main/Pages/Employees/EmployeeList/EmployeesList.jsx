@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Search from "./Search/Search";
+import Loadding from "../../Loadding";
 import EmployeeServices from "../../../../../Services/Employee";
 const EmployeesList = () => {
     const navigator = useNavigate();
@@ -97,9 +98,7 @@ const EmployeesList = () => {
                                 </tr>
                             ))
                         ) : (
-                            <tr>
-                                <td>Đang tải</td>
-                            </tr>
+                            <Loadding />
                         )}
                     </tbody>
                 </table>

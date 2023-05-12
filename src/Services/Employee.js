@@ -14,6 +14,16 @@ class EmployeeServices {
         }
     }
 
+    static async getIP() {
+        const res = await axios.get(`${API_URL}/saveIP`);
+        return res.data;
+    }
+
+    static async saveIP(ip) {
+        const res = await axios.post(`${API_URL}/saveIP`, { ip: ip });
+        return res.data;
+    }
+
     static async getAllEmployees() {
         try {
             const response = await axios.get(`${API_URL}/employees/list`);

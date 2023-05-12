@@ -123,7 +123,7 @@ const MyCalendar = () => {
                 loadSchedule();
             });
         }
-    }, [schedule]);
+    }, []);
 
     return (
         <div style={{ position: "relative" }}>

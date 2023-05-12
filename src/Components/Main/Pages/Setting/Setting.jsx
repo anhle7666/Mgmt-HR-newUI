@@ -1,22 +1,44 @@
 import { useState, useEffect } from "react";
+import EmployeeServices from "../../../../Services/Employee";
+
 const Setting = () => {
     const [edit, isEdit] = useState(false);
-    const [ipAddress, setIpAddress] = useState("");
+
+    const [ip, setIP] = useState("");
+
     useEffect(() => {
-        fetch("https://api.ipify.org/?format=json")
-            .then((response) => response.json())
-            .then((data) => {
-                setIpAddress(data.ip);
-            });
+        const loadData = async () => {
+            const IP = await EmployeeServices.getIP();
+            IP.ip ? setIP(IP.ip) : setIP("-");
+        };
+        loadData();
     }, []);
-    const handleChangeIP = (event) => {
-        setIpAddress(event.target.value);
+
+    const updateIP = async (ip) => {
+        await EmployeeServices.saveIP(ip);
     };
+
+    const isValidIP = (ip) => {
+        const IP_PATTERN = /^(\d{1,3}\.){3}\d{1,3}$/; // pattern for IPv4 addresses
+        return IP_PATTERN.test(ip);
+    };
+
+    const saveIP = () => {
+        const IP = ip;
+        if (isValidIP(IP)) {
+            console.log(IP);
+            updateIP(IP);
+            isEdit(false);
+        } else {
+            alert("IP không hợp lệ");
+        }
+    };
+
     const setThisPC = () => {
         fetch("https://api.ipify.org/?format=json")
             .then((response) => response.json())
             .then((data) => {
-                setIpAddress(data.ip);
+                setIP(data.ip);
             });
     };
 
@@ -42,17 +64,18 @@ const Setting = () => {
                                     <input
                                         type="text"
                                         className="input input-bordered input-primary w-full max-w-xs"
-                                        placeholder={ipAddress}
-                                        onChange={handleChangeIP}
-                                        value={ipAddress}
+                                        onChange={(e) => {
+                                            setIP(e.target.value);
+                                        }}
+                                        value={ip}
                                     />
                                 </td>
                             ) : (
-                                <td>{ipAddress}</td>
+                                <td>{ip}</td>
                             )}
                             <td>
                                 {edit ? (
-                                    <button className="btn btn-success btn-xs" onClick={() => isEdit(false)}>
+                                    <button className="btn btn-success btn-xs" onClick={() => saveIP()}>
                                         Xong
                                     </button>
                                 ) : (

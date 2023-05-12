@@ -69,6 +69,7 @@ const Homepage = () => {
         // const IDEmployee = "PT00013";
         let userData = await faceio.authenticate({});
         const IDEmployee = userData.payload.IDEmployee;
+        console.log(IDEmployee);
         const timekeep = {};
         const Time = new Date();
         timekeep.IDEmployee = IDEmployee;
